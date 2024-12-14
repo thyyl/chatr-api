@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package chat;
+
+option go_package = "proto/chat;chat";
+
+message CreateChannelRequest {
+}
+
+message CreateChannelResponse {
+    uint64 channelId = 1;
+    string accessToken = 2;
+}
+
+service ChannelService {
+    rpc CreateChannel(CreateChannelRequest) returns (CreateChannelResponse) {}
+}

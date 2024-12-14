@@ -1,0 +1,97 @@
+chat:
+  http:
+    server:
+      port: '5001'
+      maxConnection: 200
+      swag: true
+  grpc:
+    server:
+      port: '4000'
+    client:
+      user:
+        endpoint: 'localhost:4001'
+      forwarder:
+        endpoint: 'localhost:4002'
+  subscriber:
+    id: mychatserver
+  message:
+    maxNum: 5000
+    paginationNum: 5000
+    maxSizeByte: 4096
+  jwt:
+    secret: mysecret
+    expirationSecond: 86400
+forwarder:
+  grpc:
+    server:
+      port: '4002'
+match:
+  http:
+    server:
+      port: '5002'
+      maxConnection: 200
+      swag: true
+  grpc:
+    client:
+      chat:
+        endpoint: 'localhost:4000'
+      user:
+        endpoint: 'localhost:4001'
+uploader:
+  http:
+    server:
+      port: '5003'
+      swag: true
+      maxBodyByte: 67108864
+      maxMemoryByte: 16777216
+  s3:
+    endpoint: http://localhost:9000
+    region: us-east-1
+    bucket: myfilebucket
+    accessKey: testaccesskey
+    secretKey: testsecret
+    presignLifetimeSecond: 86400
+  rateLimit:
+    channelUpload:
+      rps: 200
+      burst: 50
+user:
+  http:
+    server:
+      port: '80'
+      swag: false
+  grpc:
+    server:
+      port: '4000'
+  oauth:
+    cookie:
+      maxAge: 3600
+      path: '/'
+      domain: 'localhost'
+    google:
+      redirectUrl: 'http://localhost/api/user/oauth2/google/callback'
+      clientId: ''
+      clientSecret: ''
+      scopes: 'https://www.googleapis.com/auth/userinfo.email,https://www.googleapis.com/auth/userinfo.profile'
+  auth:
+    cookie:
+      maxAge: 86400
+      path: '/'
+      domain: 'localhost'
+kafka:
+  address: localhost:9092
+  version: '1.0.0'
+cassandra:
+  hosts: localhost
+  port: 9042
+  user: cassandra
+  password: cassandra
+  keyspace: chatr
+redis:
+  password: pass.123
+  address: localhost:6379
+  expirationHour: 24
+  minIdleConnection: 30
+  poolSize: 500
+  readTimeoutMilliSecond: 500
+  writeTimeoutMilliSecond: 500

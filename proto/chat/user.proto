@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package chat;
+
+option go_package = "proto/chat;chat";
+
+message AddUserRequest {
+    uint64 channelId = 1;
+    uint64 userId = 2;
+}
+
+message AddUserResponse {
+}
+
+service UserService {
+    rpc AddUserToChannel(AddUserRequest) returns (AddUserResponse) {}
+}
